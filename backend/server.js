@@ -1,19 +1,14 @@
 const express = require('express');
 const cors = require('cors');
 const mysql = require('mysql2');
+
+
 const app = express();
 
 
 app.use(cors());
 app.use(express.json());
 
-app.get('/api', (req, res) => {
-    res.json({message: "Hello from express"});
-});
-
-app.get('/nome', (req, res) => {
-    res.json({nome: "Gustavo"});
-});
 
 const db = mysql.createConnection({
     host: 'localhost',

@@ -4,46 +4,34 @@ import axios from 'axios'
 
 function App() {
 
-  const [message, setMessage] = useState("");
-  const [nome, setNome] = useState("");
-  const [email, setEmail] = useState("");
+  
+  const [usuarios, setUsuario] = useState([]);
 
-  useEffect (() =>{
-    axios.get('http://localhost:5000/api')
-    .then(response => {
-      setMessage(response.data.message);
+  const buscar_usuarios = () => {
+    axios.get("http://localhost:5000/usuarios")
+    .then (response => {
+      setUsuario(response.data);
     })
     .catch (error => {
-      console.error('Erro ao pegar a mensagem: ', error);
+      console.error("Erro ao encontrar usuarios: ", error);
     });
-    axios.get('http://localhost:5000/nome')
-    .then(response => {
-      setNome(response.data.nome);
-    })
-    .catch(error => {
-      console.error("error: ", error)
-    });
-    axios.get('http://localhost:5000/usuarios')
-    .then(response => {
-      setNome(response.data.nome);
-      setEmail(response.data.email);
-    })
-    .catch(error => {
-      console.error("error: ", error)
-    });
-
-  }, []);
-  
-
+  }
 
 
   return (
     <>
       <div>
         <h1>React com express</h1>
-        <p>{message}</p>
-        <p>{nome}</p>
-        <p>{email}</p>
+
+        <button onClick={buscar_usuarios}>Buscar Usuarios</button>
+        <ul>
+          {usuarios.map(usuario => (
+            <li key={usuario.id}>
+              <p>{usuario.nome}</p>
+              <p>{usuario.email}</p>
+            </li>
+          ))}
+        </ul>
       </div>
     </>
   )
